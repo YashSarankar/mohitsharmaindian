@@ -6,6 +6,7 @@ import 'screens/auth/phone_login_screen.dart';
 import 'screens/auth/otp_verification_screen.dart';
 import 'models/cart_provider.dart';
 import 'models/bottom_nav_provider.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(
@@ -27,8 +28,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isLoggedIn = true;
+  bool _isLoggedIn = false;
   String? _pendingPhoneNumber;
+  bool _showSplash = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _showSplash = false;
+      });
+    });
+  }
 
   void _onOtpVerified() {
     setState(() {
@@ -49,16 +61,18 @@ class _MyAppState extends State<MyApp> {
       title: 'Course App',
       theme: AppTheme.themeData,
       debugShowCheckedModeBanner: false,
-      home: _isLoggedIn
-          ? const MainNavigation()
-          : (_pendingPhoneNumber == null
-              ? PhoneLoginScreen(
-                  onSendOtp: _onSendOtp,
-                )
-              : OtpVerificationScreen(
-                  phoneNumber: _pendingPhoneNumber!,
-                  onVerified: _onOtpVerified,
-                )),
+      home: _showSplash
+          ? const SplashScreen()
+          : (_isLoggedIn
+              ? const MainNavigation()
+              : (_pendingPhoneNumber == null
+                  ? PhoneLoginScreen(
+                      onSendOtp: _onSendOtp,
+                    )
+                  : OtpVerificationScreen(
+                      phoneNumber: _pendingPhoneNumber!,
+                      onVerified: _onOtpVerified,
+                    ))),
     );
   }
 }
