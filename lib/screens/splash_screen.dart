@@ -16,10 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _videoPlayerController;
   bool _isVideoInitialized = false;
   String? _videoError;
+  bool _hasNavigated = false;
 
   @override
   void initState() {
     super.initState();
+    _hasNavigated = false;
     _initializeVideo();
   }
 
@@ -36,33 +38,20 @@ class _SplashScreenState extends State<SplashScreen> {
           _isVideoInitialized = true;
         });
       }
-
-      // Listen for video completion
-      _videoPlayerController.addListener(() {
-        if (_videoPlayerController.value.position >= _videoPlayerController.value.duration) {
-          _navigateToNextScreen();
-        }
-      });
-      
-      // Fallback timer
-      Timer(Duration(seconds: 8), () {
-        if (mounted) {
-          _navigateToNextScreen();
-        }
-      });
     } catch (e) {
       if (mounted) {
         setState(() {
           _videoError = e.toString();
         });
       }
-      // If video fails, navigate after a short delay
-      Future.delayed(const Duration(seconds: 3), () {
-        if (mounted) {
-          _navigateToNextScreen();
-        }
-      });
     }
+    // Navigate to next screen after 6 seconds, regardless of video state or error
+    Future.delayed(const Duration(seconds: 6), () {
+      if (mounted && !_hasNavigated) {
+        _hasNavigated = true;
+        _navigateToNextScreen();
+      }
+    });
   }
 
   void _navigateToNextScreen() {
@@ -73,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
       MaterialPageRoute(
         builder: (_) => isLoggedIn
             ? const MainNavigation()
-            : PhoneLoginScreen(onSendOtp: (_) {}),
+            : PhoneLoginScreen(),
       ),
     );
   }
@@ -89,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: _videoError != null
           ? Center(
               child: Text(
@@ -98,14 +88,28 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             )
           : (_isVideoInitialized && _videoPlayerController.value.isInitialized)
-              ? VideoPlayer(_videoPlayerController)
+              ? Center(
+                  child: AspectRatio(
+                    aspectRatio: _videoPlayerController.value.aspectRatio,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: SizedBox(
+                        width: _videoPlayerController.value.size.width,
+                        height: _videoPlayerController.value.size.height,
+                        child: VideoPlayer(_videoPlayerController),
+                      ),
+                    ),
+                  ),
+                )
               : Container(
                   width: double.infinity,
                   height: double.infinity,
                   color: Colors.black,
                   child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    child: Image.asset(
+                      'assets/images/app_logo.png',
+                      width: 120,
+                      height: 120,
                     ),
                   ),
                 ),

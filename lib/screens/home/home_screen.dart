@@ -48,11 +48,7 @@ class HomeScreen extends StatelessWidget {
                 // Navigate to login screen and clear the navigation stack
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => PhoneLoginScreen(
-                      onSendOtp: (phoneNumber) {
-                        // This will be handled by the main.dart navigation logic
-                      },
-                    ),
+                    builder: (context) => PhoneLoginScreen(),
                   ),
                   (route) => false, // This removes all previous routes
                 );

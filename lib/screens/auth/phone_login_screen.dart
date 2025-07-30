@@ -5,8 +5,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 
 class PhoneLoginScreen extends StatefulWidget {
-  final ValueChanged<String> onSendOtp;
-  const PhoneLoginScreen({Key? key, required this.onSendOtp}) : super(key: key);
+  const PhoneLoginScreen({Key? key}) : super(key: key);
 
   @override
   State<PhoneLoginScreen> createState() => _PhoneLoginScreenState();
@@ -284,7 +283,15 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                                               if (_formKey.currentState!.validate()) {
                                                 setState(() => _isLoading = true);
                                                 await Future.delayed(const Duration(milliseconds: 800)); // Simulate loading
-                                                widget.onSendOtp(_phoneController.text.replaceAll(RegExp(r'\D'), ''));
+                                                final phoneNumber = _phoneController.text.replaceAll(RegExp(r'\D'), '');
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) => OtpVerificationScreen(
+                                                      phoneNumber: phoneNumber,
+                                                      onVerified: () {}, // You can handle post-verification here
+                                                    ),
+                                                  ),
+                                                );
                                                 setState(() => _isLoading = false);
                                               }
                                             },

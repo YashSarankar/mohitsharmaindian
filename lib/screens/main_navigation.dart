@@ -293,28 +293,30 @@ class _MainNavigationState extends State<MainNavigation> {
           // Header
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    const Text(
+                      'Explore Our Courses',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    // Removed search IconButton here
+                  ],
+                ),
+                const SizedBox(height: 4),
                 const Text(
-                  'Explore',
+                  'Browse categories and discover the right courses and resources for your UPSC journey.',
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    fontSize: 14,
+                    color: Colors.black54,
                   ),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.search, color: Colors.black),
-                  onPressed: () {
-                    // TODO: Implement search functionality
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.filter_list, color: Colors.black),
-                  onPressed: () {
-                    // TODO: Implement filter functionality
-                  },
                 ),
               ],
             ),
@@ -326,16 +328,6 @@ class _MainNavigationState extends State<MainNavigation> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Categories Section
-                  const Text(
-                    'Categories',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

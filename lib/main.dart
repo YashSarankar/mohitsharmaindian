@@ -28,32 +28,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isLoggedIn = false;
-  String? _pendingPhoneNumber;
-  bool _showSplash = true;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _showSplash = false;
-      });
-    });
   }
 
-  void _onOtpVerified() {
-    setState(() {
-      _isLoggedIn = true;
-      _pendingPhoneNumber = null;
-    });
-  }
 
-  void _onSendOtp(String phoneNumber) {
-    setState(() {
-      _pendingPhoneNumber = phoneNumber;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +42,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Course App',
       theme: AppTheme.themeData,
       debugShowCheckedModeBanner: false,
-      home: _showSplash
-          ? const SplashScreen()
-          : (_isLoggedIn
-              ? const MainNavigation()
-              : (_pendingPhoneNumber == null
-                  ? PhoneLoginScreen(
-                      onSendOtp: _onSendOtp,
-                    )
-                  : OtpVerificationScreen(
-                      phoneNumber: _pendingPhoneNumber!,
-                      onVerified: _onOtpVerified,
-                    ))),
+      home: SplashScreen(),
     );
   }
 }
