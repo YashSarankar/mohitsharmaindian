@@ -91,8 +91,16 @@ class CourseDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryColor.withOpacity(0.10),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFF8F9FA),
+                            Color(0xFFE8EAF6),
+                          ],
+                        ),
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white, width: 1),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -114,80 +122,100 @@ class CourseDetailsScreen extends StatelessWidget {
                                 Text(
                                   course.batch,
                                   style: TextStyle(
-                                    color: AppTheme.primaryColor,
+                                    color: AppTheme.textColor.withOpacity(0.7),
                                     fontSize: 14,
                                     fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: 10),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.accentColor,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const Text(
-                                        'Live', 
-                                        style: TextStyle(
-                                          color: Colors.white, 
-                                          fontSize: 12, 
-                                          fontWeight: FontWeight.w600, 
-                                          fontFamily: 'Poppins'
-                                        )
-                                      ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'बैच आरंभ : 11 अगस्त',
+                                          style: TextStyle(
+                                            color: AppTheme.textColor.withOpacity(0.8),
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.accentColor,
+                                                borderRadius: BorderRadius.circular(6),
+                                              ),
+                                              child: const Text(
+                                                '• Live', 
+                                                style: TextStyle(
+                                                  color: Colors.white, 
+                                                  fontSize: 11, 
+                                                  fontWeight: FontWeight.w600, 
+                                                  fontFamily: 'Poppins'
+                                                )
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.primaryColor,
+                                                borderRadius: BorderRadius.circular(6),
+                                              ),
+                                              child: Text(
+                                                course.medium, 
+                                                style: const TextStyle(
+                                                  color: Colors.white, 
+                                                  fontSize: 11, 
+                                                  fontWeight: FontWeight.w600, 
+                                                  fontFamily: 'Poppins'
+                                                )
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(width: 10),
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                       decoration: BoxDecoration(
-                                        color: AppTheme.primaryColor,
-                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 4,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ],
                                       ),
-                                      child: Text(
-                                        course.medium, 
-                                        style: const TextStyle(
-                                          color: Colors.white, 
-                                          fontSize: 12, 
-                                          fontWeight: FontWeight.w600, 
-                                          fontFamily: 'Poppins'
-                                        )
+                                      padding: const EdgeInsets.all(12),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.live_tv, color: AppTheme.accentColor, size: 28),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'Live', 
+                                            style: TextStyle(
+                                              fontSize: 10, 
+                                              color: AppTheme.accentColor, 
+                                              fontWeight: FontWeight.bold, 
+                                              fontFamily: 'Poppins'
+                                            )
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.live_tv, color: AppTheme.accentColor, size: 28),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Live', 
-                                  style: TextStyle(
-                                    fontSize: 10, 
-                                    color: AppTheme.accentColor, 
-                                    fontWeight: FontWeight.bold, 
-                                    fontFamily: 'Poppins'
-                                  )
                                 ),
                               ],
                             ),
@@ -221,17 +249,17 @@ class CourseDetailsScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    '\u20B9${oldPrice.toStringAsFixed(0)}',
+                                    '\u20B9${oldPrice.toStringAsFixed(0)}/-',
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 15,
-                                      color: AppTheme.accentColor.withOpacity(0.7),
+                                      color: Colors.red,
                                       decoration: TextDecoration.lineThrough,
                                     ),
                                   ),
                                   const SizedBox(width: 12),
                                   Text(
-                                    '\u20B9${course.price.toStringAsFixed(0)}',
+                                    '\u20B9${course.price.toStringAsFixed(0)}/-',
                                     style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 17,
