@@ -303,69 +303,6 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              // Divider with 'or'
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Divider(
-                                      color: colorScheme.primary.withOpacity(0.3),
-                                      thickness: 1,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text(
-                                      'or',
-                                      style: textTheme.bodySmall?.copyWith(color: colorScheme.primary),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Divider(
-                                      color: colorScheme.primary.withOpacity(0.3),
-                                      thickness: 1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              // Remove lock icon and add themed Google login button
-                              const SizedBox(height: 16),
-                              SizedBox(
-                                width: double.infinity,
-                                height: 48,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    side: const BorderSide(color: Color(0xFFE0E0E0), width: 1),
-                                  ),
-                                  onPressed: () {
-                                    // TODO: Implement Google login
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.network(
-                                        'https://logos-world.net/wp-content/uploads/2020/09/Google-Symbol.png',
-                                        height: 24,
-                                        width: 24,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      const Text(
-                                        'Continue with Google',
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),

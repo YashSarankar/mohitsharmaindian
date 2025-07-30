@@ -80,12 +80,12 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        bottom: true,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 80),
+      body: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               // Profile Card
               Container(
@@ -229,7 +229,6 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

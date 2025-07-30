@@ -6,6 +6,7 @@ import 'package:mohitsharmaindian/screens/home/home_screen.dart';
 import 'package:mohitsharmaindian/screens/main_navigation.dart';
 import 'package:pinput/pinput.dart';
 import 'dart:math';
+import 'complete_profile_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -24,10 +25,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> with Sing
   bool _hasError = false;
   int _timerSeconds = 30;
   Timer? _timer;
-  bool _otpSent = true;
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
-  int _activeField = 0;
 
   @override
   void initState() {
@@ -72,8 +71,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> with Sing
       });
     } else {
       setState(() => _isLoading = false);
-      // Navigate to home screen after successful verification
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainNavigation()));
+      // Navigate to complete profile screen after successful verification
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(builder: (context) => CompleteProfileScreen(phoneNumber: widget.phoneNumber))
+      );
       // If you want to call widget.onVerified() as well, you can do so here
       // widget.onVerified();
     }
@@ -81,7 +83,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> with Sing
 
   void _onResend() {
     setState(() {
-      _otpSent = true;
     });
     _startTimer();
     ScaffoldMessenger.of(context).showSnackBar(

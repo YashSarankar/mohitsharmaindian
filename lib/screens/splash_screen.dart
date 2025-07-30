@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import '../theme/app_theme.dart';
 import 'main_navigation.dart';
 import 'auth/phone_login_screen.dart';
+import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,136 +12,103 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _fadeAnimation;
+class _SplashScreenState extends State<SplashScreen> {
+  late VideoPlayerController _videoPlayerController;
+  bool _isVideoInitialized = false;
+  String? _videoError;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-    _scaleAnimation = Tween<double>(begin: 0.7, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
-    _controller.forward();
+    _initializeVideo();
+  }
 
-    Future.delayed(const Duration(seconds: 20), () async {
-      bool isLoggedIn = false; // TODO: Replace with real login check
-      if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => isLoggedIn
-              // ignore: dead_code
-              ? const MainNavigation()
-              : PhoneLoginScreen(onSendOtp: (_) {}),
-        ),
-      );
-    });
+  Future<void> _initializeVideo() async {
+    _videoPlayerController = VideoPlayerController.asset('assets/video/km_20250730_2160p_60f_20250730_133531.mp4');
+    
+    try {
+      await _videoPlayerController.initialize();
+      await _videoPlayerController.setLooping(false);
+      await _videoPlayerController.play();
+      
+      if (mounted) {
+        setState(() {
+          _isVideoInitialized = true;
+        });
+      }
+
+      // Listen for video completion
+      _videoPlayerController.addListener(() {
+        if (_videoPlayerController.value.position >= _videoPlayerController.value.duration) {
+          _navigateToNextScreen();
+        }
+      });
+      
+      // Fallback timer
+      Timer(Duration(seconds: 8), () {
+        if (mounted) {
+          _navigateToNextScreen();
+        }
+      });
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _videoError = e.toString();
+        });
+      }
+      // If video fails, navigate after a short delay
+      Future.delayed(const Duration(seconds: 3), () {
+        if (mounted) {
+          _navigateToNextScreen();
+        }
+      });
+    }
+  }
+
+  void _navigateToNextScreen() {
+    if (!mounted) return;
+    
+    bool isLoggedIn = false; // TODO: Replace with real login check
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => isLoggedIn
+            ? const MainNavigation()
+            : PhoneLoginScreen(onSendOtp: (_) {}),
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (_isVideoInitialized) {
+      _videoPlayerController.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppTheme.primaryColor,
-              AppTheme.accentColor.withOpacity(0.85),
-              AppTheme.primaryColor.withOpacity(0.7),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) => Opacity(
-                opacity: _fadeAnimation.value,
-                child: Transform.scale(
-                  scale: _scaleAnimation.value,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.18),
-                          blurRadius: 32,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      width: 140,
-                      height: 140,
+      body: _videoError != null
+          ? Center(
+              child: Text(
+                'Failed to load video.\n$_videoError',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            )
+          : (_isVideoInitialized && _videoPlayerController.value.isInitialized)
+              ? VideoPlayer(_videoPlayerController)
+              : Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) => Opacity(
-                opacity: _fadeAnimation.value,
-                child: Text(
-                  'Course App',
-                  style: TextStyle(
-                    color: AppTheme.textColor,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black.withOpacity(0.18),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) => Opacity(
-                opacity: _fadeAnimation.value,
-                child: Text(
-                  'Empower your learning journey',
-                  style: TextStyle(
-                    color: AppTheme.textColor.withOpacity(0.7),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.textColor),
-              strokeWidth: 2.8,
-            ),
-          ],
-        ),
-      ),
     );
   }
 } 

@@ -64,150 +64,192 @@ class CourseDetailsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Card
+              // Main Course Details Card
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.10),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            course.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              fontFamily: 'Poppins',
-                              color: AppTheme.textColor,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            course.batch,
-                            style: TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: AppTheme.accentColor,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: const Text('Live', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600, fontFamily: 'Poppins')),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: AppTheme.primaryColor,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Text(course.medium, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600, fontFamily: 'Poppins')),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Icon(Icons.live_tv, color: AppTheme.accentColor, size: 28),
-                              const SizedBox(height: 2),
-                              Text('Live', style: TextStyle(fontSize: 10, color: AppTheme.accentColor, fontWeight: FontWeight.bold, fontFamily: 'Poppins')),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 18),
-              // Info Table
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _infoRow('Validity', '${course.validityMonths} Months'),
-                    _infoRow('Category', course.category),
-                    _infoRow('Medium', course.medium),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Header Card
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryColor.withOpacity(0.10),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  course.title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins',
+                                    color: AppTheme.textColor,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  course.batch,
+                                  style: TextStyle(
+                                    color: AppTheme.primaryColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.accentColor,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Text(
+                                        'Live', 
+                                        style: TextStyle(
+                                          color: Colors.white, 
+                                          fontSize: 12, 
+                                          fontWeight: FontWeight.w600, 
+                                          fontFamily: 'Poppins'
+                                        )
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Text(
+                                        course.medium, 
+                                        style: const TextStyle(
+                                          color: Colors.white, 
+                                          fontSize: 12, 
+                                          fontWeight: FontWeight.w600, 
+                                          fontFamily: 'Poppins'
+                                        )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.live_tv, color: AppTheme.accentColor, size: 28),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Live', 
+                                  style: TextStyle(
+                                    fontSize: 10, 
+                                    color: AppTheme.accentColor, 
+                                    fontWeight: FontWeight.bold, 
+                                    fontFamily: 'Poppins'
+                                  )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Info Table
+                    Column(
                       children: [
-                        const Text('Price', style: TextStyle(fontFamily: 'Poppins', fontSize: 15, color: Colors.black54)),
-                        Row(
-                          children: [
-                            Text(
-                              '\u20B9${oldPrice.toStringAsFixed(0)}',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15,
-                                color: AppTheme.accentColor.withOpacity(0.7),
-                                decoration: TextDecoration.lineThrough,
+                        _infoRow('Validity', '${course.validityMonths} Months'),
+                        const SizedBox(height: 4),
+                        _infoRow('Category', course.category),
+                        const SizedBox(height: 4),
+                        _infoRow('Medium', course.medium),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Price', 
+                                style: TextStyle(
+                                  fontFamily: 'Poppins', 
+                                  fontSize: 15, 
+                                  color: Colors.black54
+                                )
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              '\u20B9${course.price.toStringAsFixed(0)}',
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 17,
-                                color: AppTheme.accentColor,
-                                fontWeight: FontWeight.bold,
+                              Row(
+                                children: [
+                                  Text(
+                                    '\u20B9${oldPrice.toStringAsFixed(0)}',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                      color: AppTheme.accentColor.withOpacity(0.7),
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    '\u20B9${course.price.toStringAsFixed(0)}',
+                                    style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 17,
+                                      color: AppTheme.accentColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 20),
               // Action Tiles
               Row(
                 children: [
@@ -219,7 +261,7 @@ class CourseDetailsScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
@@ -235,7 +277,14 @@ class CourseDetailsScreen extends StatelessWidget {
                           children: [
                             Icon(Icons.ondemand_video, color: AppTheme.primaryColor, size: 28),
                             const SizedBox(height: 8),
-                            Text('Demo Class', style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppTheme.textColor)),
+                            Text(
+                              'Demo Class', 
+                              style: TextStyle(
+                                fontFamily: 'Poppins', 
+                                fontWeight: FontWeight.w500, 
+                                color: AppTheme.textColor
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -250,7 +299,7 @@ class CourseDetailsScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
@@ -266,7 +315,14 @@ class CourseDetailsScreen extends StatelessWidget {
                           children: [
                             Icon(Icons.featured_play_list, color: AppTheme.primaryColor, size: 28),
                             const SizedBox(height: 8),
-                            Text('Features', style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppTheme.textColor)),
+                            Text(
+                              'Features', 
+                              style: TextStyle(
+                                fontFamily: 'Poppins', 
+                                fontWeight: FontWeight.w500, 
+                                color: AppTheme.textColor
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -342,12 +398,27 @@ class CourseDetailsScreen extends StatelessWidget {
 
 Widget _infoRow(String label, String value) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 10),
+    padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, color: Colors.black54)),
-        Text(value, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, color: Colors.black87, fontWeight: FontWeight.w500)),
+        Text(
+          label, 
+          style: const TextStyle(
+            fontFamily: 'Poppins', 
+            fontSize: 15, 
+            color: Colors.black54
+          )
+        ),
+        Text(
+          value, 
+          style: const TextStyle(
+            fontFamily: 'Poppins', 
+            fontSize: 15, 
+            color: Colors.black87, 
+            fontWeight: FontWeight.w500
+          )
+        ),
       ],
     ),
   );
