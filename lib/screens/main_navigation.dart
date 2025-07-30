@@ -204,7 +204,7 @@ class _MainNavigationState extends State<MainNavigation> {
                 color: isSelected 
                     ? theme.primaryColor
                     : Colors.grey[500],
-                size: 20,
+                size: 22,
               ),
               const SizedBox(height: 1),
               Text(
