@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home/home_screen.dart';
 import 'dart:ui';
-import 'dart:math';
-import '../widgets/course_card.dart';
-import '../models/course.dart';
 import 'home/cart_screen.dart';
 import 'home/my_courses_screen.dart';
 import 'home/profile_screen.dart';
-import 'package:provider/provider.dart';
-import '../models/bottom_nav_provider.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -39,8 +34,6 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return WillPopScope(
       onWillPop: () async {
         if (_currentIndex != 0) {
@@ -270,21 +263,21 @@ class _MainNavigationState extends State<MainNavigation> {
 
   Widget _buildExploreBottomSheet() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: MediaQuery.of(context).size.height * 0.6, // Reduced from 0.85
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+          topLeft: Radius.circular(18), // Slightly less rounded
+          topRight: Radius.circular(18),
         ),
       ),
       child: Column(
         children: [
           // Handle bar
           Container(
-            margin: const EdgeInsets.only(top: 12, bottom: 8),
-            width: 40,
-            height: 4,
+            margin: const EdgeInsets.only(top: 8, bottom: 4), // Less margin
+            width: 32, // Smaller handle
+            height: 3,
             decoration: BoxDecoration(
               color: Colors.grey[300],
               borderRadius: BorderRadius.circular(2),
@@ -292,7 +285,7 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
           // Header
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4), // Less padding
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -301,20 +294,19 @@ class _MainNavigationState extends State<MainNavigation> {
                     const Text(
                       'Explore Our Courses',
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 18, // Smaller font
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
                     const Spacer(),
-                    // Removed search IconButton here
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2), // Less space
                 const Text(
                   'Browse categories and discover the right courses and resources for your UPSC journey.',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 11, // Smaller font
                     color: Colors.black54,
                   ),
                 ),
@@ -324,7 +316,7 @@ class _MainNavigationState extends State<MainNavigation> {
           // Content
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10), // Less padding
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -332,9 +324,9 @@ class _MainNavigationState extends State<MainNavigation> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 1.5,
+                    crossAxisSpacing: 8, // Less spacing
+                    mainAxisSpacing: 8, // Less spacing
+                    childAspectRatio: 1.7, // Slightly more compact
                     children: [
                       _buildCategoryCard('GS Foundation', Icons.school, Colors.blue),
                       _buildCategoryCard('IAS Prelims', Icons.quiz, Colors.green),
@@ -356,21 +348,21 @@ class _MainNavigationState extends State<MainNavigation> {
   Widget _buildCategoryCard(String title, IconData icon, Color color) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: color.withOpacity(0.1),
-        border: Border.all(color: color.withOpacity(0.3)),
+        borderRadius: BorderRadius.circular(8), // Less rounded
+        color: color.withOpacity(0.08), // Slightly lighter
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 32, color: color),
-          const SizedBox(height: 8),
+          Icon(icon, size: 24, color: color), // Smaller icon
+          const SizedBox(height: 4), // Less space
           Text(
             title,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
               color: color,
-              fontSize: 14,
+              fontSize: 11, // Smaller font
             ),
           ),
         ],
