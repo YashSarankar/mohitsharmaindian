@@ -16,20 +16,13 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
-  String _formatPhoneNumber(String input) {
-    // Format as 99999 99999
-    final digits = input.replaceAll(RegExp(r'\D'), '');
-    if (digits.length <= 5) return digits;
-    return digits.substring(0, 5) + ' ' + digits.substring(5, digits.length);
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+    final textTheme = theme.textTheme;  
     final size = MediaQuery.of(context).size;
-    bool isValidPhone = _phoneController.text.length == 10;
 
     return Scaffold(
       body: Stack(
@@ -109,34 +102,56 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Animated logo with bounce
+                  // Elegant animated logo with premium effects
                   TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0.7, end: 1),
-                    duration: const Duration(milliseconds: 900),
-                    curve: Curves.elasticOut,
-                    builder: (context, value, child) => Transform.scale(
-                      scale: value,
-                      child: child,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.primary.withOpacity(0.12),
-                            blurRadius: 24,
-                            offset: const Offset(0, 8),
+                    tween: Tween<double>(begin: 0.5, end: 1),
+                    duration: const Duration(milliseconds: 1500),
+                    curve: Curves.easeOutBack,
+                    builder: (context, scaleValue, child) => Transform.scale(
+                      scale: scaleValue,
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0, end: 1),
+                        duration: const Duration(milliseconds: 2000),
+                        curve: Curves.easeInOut,
+                        builder: (context, rotateValue, child) => Transform.rotate(
+                          angle: 0.02 * (1 - rotateValue),
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween<double>(begin: 0, end: 1),
+                            duration: const Duration(seconds: 4),
+                            curve: Curves.easeInOut,
+                            builder: (context, floatValue, child) => Transform.translate(
+                              offset: Offset(0, 6 * (1 - floatValue)),
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween<double>(begin: 0.8, end: 1),
+                                duration: const Duration(milliseconds: 1800),
+                                curve: Curves.easeOutCubic,
+                                builder: (context, glowValue, child) => Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: colorScheme.primary.withOpacity(0.15 * glowValue),
+                                        blurRadius: 30 * glowValue,
+                                        spreadRadius: 3 * glowValue,
+                                      ),
+                                      BoxShadow(
+                                        color: colorScheme.secondary.withOpacity(0.08 * glowValue),
+                                        blurRadius: 20 * glowValue,
+                                        spreadRadius: 1 * glowValue,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Image.asset(
+                                    'assets/images/splash_logo.png',
+                                    height: 140,
+                                    width: 140,
+                                    fit: BoxFit.contain,
+                                    semanticLabel: 'App Logo',
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                          semanticLabel: 'App Logo',
                         ),
                       ),
                     ),
